@@ -120,7 +120,9 @@ class Biblioteca {
    */
   mostrarLibros = function () {
     this.libros.forEach((element) => {
-      console.log(element);
+      console.log(
+        `Libro: ${element.titulo} Autor: ${element.autor} ISBN: ${element.isbn}`
+      );
     });
   };
 }

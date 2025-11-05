@@ -1,29 +1,61 @@
+/**
+ * Clase Libro que tiene las propiedades título, autor, ISBN y un estado que indica si el libro está prestado o disponible.
+ */
 class Libro {
   constructor(titulo, autor, isbn) {
+    /**
+     * @property {string} titulo Título del libro.
+     */
     this.titulo = titulo;
+
+    /**
+     *  @property {string} autor Autor del libro.
+     */
     this.autor = autor;
+
+    /**
+     * @property {string|number} isbn ISBN del libro.
+     */
     this.isbn = isbn;
+
+    /**
+     * @property {string} _prestado Estado del libro, puede ser "Disponible" o "Prestado".
+     */
     this._prestado = "Disponible";
   }
 
+  /**
+   * Obtiene el estado del libro.
+   * @returns {string} Estado del libro.
+   */
   get estado() {
     return this._prestado;
   }
 
+  /**
+   * Establece el estado del libro.
+   * @param {string} nuevoEstado Nuevo estado del libro.
+   */
   set estado(nuevoEstado) {
     if (nuevoEstado === "Disponible" || nuevoEstado === "Prestado") {
       this._prestado = nuevoEstado;
     } else {
-      console.log("Error");
+      throw new Error("Ingresa un estado correcto.");
     }
   }
 
+  /**
+   * Presta el libro si está disponible.
+   */
   prestar() {
     if (this._prestado === "Disponible") {
       this.estado = "Prestado";
     }
   }
 
+  /**
+   * Devuelve el libro si está prestado.
+   */
   devolver() {
     if (this._prestado === "Prestado") {
       this.estado = "Disponible";
@@ -31,32 +63,61 @@ class Libro {
   }
 }
 
+/**
+ * Clase Biblioteca que tiene una colección de libros y métodos para agregar libros, buscar por ISBN, prestar y devolver libros.
+ */
 class Biblioteca {
   constructor(nombre) {
+    /**
+     * @property {string} nombre Nombre de la biblioteca.
+     */
     this.nombre = nombre;
+    /**
+     * @property {Array<Libro>} libros Colección de libros en la biblioteca.
+     */
     this.libros = [];
   }
 
+  /**
+   * Agrega un libro a la colección de la biblioteca.
+   * @param {Libro} libro Objeto libro a agregar.
+   */
   agregarLibro = function (libro) {
     this.libros.push(libro);
   };
 
+  /**
+   * Busca un libro por su ISBN.
+   * @param {string|number} isbn ISBN del libro a buscar.
+   * @returns {Libro|undefined} El libro encontrado o undefined si no se encuentra.
+   */
   buscarPorISBN = function (isbn) {
     return this.libros.find((l) => l.isbn == isbn);
   };
 
+  /**
+   * Presta un libro si está disponible.
+   * @param {string|number} isbn ISBN del libro a prestar.
+   */
   prestarLibro = function (isbn) {
     const libro = this.libros.find((l) => l.isbn == isbn);
 
     libro.prestar();
   };
 
+  /**
+   * Devuelve un libro si está prestado.
+   * @param {string|number} isbn ISBN del libro a devolver.
+   */
   devolverLibro = function (isbn) {
     const libro = this.libros.find((l) => l.isbn == isbn);
 
     libro.devolver();
   };
 
+  /**
+   * Muestra todos los libros en la colección de la biblioteca.
+   */
   mostrarLibros = function () {
     this.libros.forEach((element) => {
       console.log(element);
@@ -64,6 +125,7 @@ class Biblioteca {
   };
 }
 
+// Ejemplo de uso:
 const biblio = new Biblioteca("Biblioteca Central");
 const libro = new Libro(
   "Cien años de soledad",
